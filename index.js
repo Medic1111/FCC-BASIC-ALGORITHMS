@@ -126,8 +126,8 @@ const getIndexToIns = (arr, num) =>
 console.log(getIndexToIns([10, 20, 30, 40, 50], 35));
 console.log(getIndexToIns([3, 10, 5], 3));
 console.log(getIndexToIns([], 1));
-// MUTATIONS
 
+// MUTATIONS
 const mutation = (arr) =>
   arr[1]
     .split("")
@@ -142,7 +142,6 @@ console.log(mutation(["hello", "hey"]));
 console.log(mutation(["hello", "Hello"]));
 
 //  CHUNKY MONKEY
-
 const chunkArrayInGroups = (arr, size) => {
   let newArr = [];
   while (arr.length) {
@@ -155,4 +154,23 @@ console.log(chunkArrayInGroups(["a", "b", "c", "d"], 2));
 console.log(chunkArrayInGroups([0, 1, 2, 3, 4, 5], 3));
 console.log(chunkArrayInGroups([0, 1, 2, 3, 4, 5, 6], 3));
 
-console.log(72 % 3);
+module.exports = {
+  converter,
+  factorialize,
+  chunkArrayInGroups,
+  mutation,
+  getIndexToIns,
+  bouncer,
+  frankenSplice,
+  titleCase,
+  booWho,
+  findElement,
+  truncateString,
+  repeatStringNumTimes,
+  confirmEnding,
+  largestOfFour,
+  findLongestWordLength,
+  factorialize,
+  reverseString,
+  largestOfFour,
+};
