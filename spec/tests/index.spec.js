@@ -206,3 +206,132 @@ describe("Testing repeatString for: ", () => {
     expect(foo.repeatStringNumTimes("abc", 0)).toBe("");
   });
 });
+
+// TRUNCATE
+describe("Testing truncate for: ", () => {
+  it("should return a string", () => {
+    expect(
+      typeof foo.truncateString(
+        "A-tisket a-tasket A green and yellow basket",
+        8
+      )
+    ).toBe("string");
+  });
+  it(`"A-tisket a-tasket A green and yellow basket", 8 = A-tisket...`, () => {
+    expect(
+      foo.truncateString("A-tisket a-tasket A green and yellow basket", 8)
+    ).toBe("A-tisket...");
+  });
+  it(`"Peter Piper picked a peck of pickled peppers", 11 = Peter Piper...`, () => {
+    expect(
+      foo.truncateString("Peter Piper picked a peck of pickled peppers", 11)
+    ).toBe("Peter Piper...");
+  });
+  it(`"A-tisket a-tasket A green and yellow basket", "A-tisket a-tasket A green and yellow basket".length = A-tisket a-tasket A green and yellow basket`, () => {
+    expect(
+      foo.truncateString(
+        "A-tisket a-tasket A green and yellow basket",
+        "A-tisket a-tasket A green and yellow basket".length
+      )
+    ).toBe("A-tisket a-tasket A green and yellow basket");
+  });
+  it(`"A-tisket a-tasket A green and yellow basket", "A-tisket a-tasket A green and yellow basket".length + 2 = A-tisket a-tasket A green and yellow basket`, () => {
+    expect(
+      foo.truncateString(
+        "A-tisket a-tasket A green and yellow basket",
+        "A-tisket a-tasket A green and yellow basket".length + 2
+      )
+    ).toBe("A-tisket a-tasket A green and yellow basket");
+  });
+  it(`"A-", 1 = A...`, () => {
+    expect(foo.truncateString("A-", 1)).toBe("A...");
+  });
+  it(`"Absolutely Longer", 2 = Ab...`, () => {
+    expect(foo.truncateString("Absolutely Longer", 2)).toBe("Ab...");
+  });
+});
+
+// FINDERS KEEPERS
+describe("Testinf findersKeepers for: ", () => {
+  it("should return number or undefined", () => {
+    expect(
+      typeof foo.findElement([1, 3, 5, 8, 9, 10], function (num) {
+        return num % 2 === 0;
+      })
+    ).toBe("number" || undefined);
+  });
+  it(`[1, 3, 5, 8, 9, 10], function (num) {
+    return num % 2 === 0;
+  } = 8`, () => {
+    expect(
+      foo.findElement([1, 3, 5, 8, 9, 10], function (num) {
+        return num % 2 === 0;
+      })
+    ).toBe(8);
+  });
+  it(`[1, 3, 5, 9], function (num) {
+    return num % 2 === 0;
+  } = undefined`, () => {
+    expect(
+      foo.findElement([1, 3, 5, 9], function (num) {
+        return num % 2 === 0;
+      })
+    ).toBe(undefined);
+  });
+});
+
+// BOO WHO
+
+describe("Testing booWho for: ", () => {
+  it("should return boolean", () => {
+    expect(typeof foo.booWho(true)).toBe("boolean");
+  });
+  it("should return true for true", () => {
+    expect(foo.booWho(true)).toBe(true);
+  });
+  it("should return false for true", () => {
+    expect(foo.booWho(false)).toBe(true);
+  });
+  it("should return [1, 2, 3] for false", () => {
+    expect(foo.booWho([1, 2, 3])).toBe(false);
+  });
+  it("should return [].slice for false", () => {
+    expect(foo.booWho([].slice)).toBe(false);
+  });
+  it("should return { 'a': 1 } for false", () => {
+    expect(foo.booWho({ a: 1 })).toBe(false);
+  });
+  it("should return 1 for false", () => {
+    expect(foo.booWho(1)).toBe(false);
+  });
+  it("should return NaN for false", () => {
+    expect(foo.booWho(NaN)).toBe(false);
+  });
+  it("should return 'a' for false", () => {
+    expect(foo.booWho("a")).toBe(false);
+  });
+  it("should return 'true' for false", () => {
+    expect(foo.booWho("true")).toBe(false);
+  });
+  it("should return 'false' for false", () => {
+    expect(foo.booWho("false")).toBe(false);
+  });
+});
+
+// TitleCase
+describe("Testing titleCase for: ", () => {
+  it("should return a string", () => {
+    expect(typeof foo.titleCase("I'm a little tea pot")).toBe("string");
+  });
+  it("I'm a little tea pot = I'm A Little Tea Pot", () => {
+    expect(foo.titleCase("I'm a little tea pot")).toBe("I'm A Little Tea Pot");
+  });
+  it("sHoRt AnD sToUt = Short And Stout", () => {
+    expect(foo.titleCase("sHoRt AnD sToUt")).toBe("Short And Stout");
+  });
+  it("HERE IS MY HANDLE HERE IS MY SPOUT = Here Is My Handle Here Is My Spout", () => {
+    expect(foo.titleCase("HERE IS MY HANDLE HERE IS MY SPOUT")).toBe(
+      "Here Is My Handle Here Is My Spout"
+    );
+  });
+});
