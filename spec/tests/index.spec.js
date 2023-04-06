@@ -281,7 +281,6 @@ describe("Testinf findersKeepers for: ", () => {
 });
 
 // BOO WHO
-
 describe("Testing booWho for: ", () => {
   it("should return boolean", () => {
     expect(typeof foo.booWho(true)).toBe("boolean");
@@ -333,5 +332,194 @@ describe("Testing titleCase for: ", () => {
     expect(foo.titleCase("HERE IS MY HANDLE HERE IS MY SPOUT")).toBe(
       "Here Is My Handle Here Is My Spout"
     );
+  });
+});
+
+// Slice and Splice
+describe("Testing frankenSplice for: ", () => {
+  it("should return an array", () => {
+    expect(typeof foo.frankenSplice([1, 2, 3], [4, 5], 1)).toBe("object");
+  });
+  it(`[1, 2, 3], [4, 5], 1 = [4, 1, 2, 3, 5]`, () => {
+    expect(foo.frankenSplice([1, 2, 3], [4, 5], 1)).toEqual([4, 1, 2, 3, 5]);
+  });
+  it(`[1, 2, 3, 4], [], 0 = [1, 2, 3, 4]`, () => {
+    expect(foo.frankenSplice([1, 2, 3, 4], [], 0)).toEqual([1, 2, 3, 4]);
+  });
+  it(`["claw", "tentacle"], ["head", "shoulders", "knees", "toes"], 2, 0 = ["head", "shoulders", "claw", "tentacle", "knees", "toes"]`, () => {
+    expect(
+      foo.frankenSplice(
+        ["claw", "tentacle"],
+        ["head", "shoulders", "knees", "toes"],
+        2,
+        0
+      )
+    ).toEqual(["head", "shoulders", "claw", "tentacle", "knees", "toes"]);
+  });
+  it(`Should not mutate first array`, () => {
+    let firstArr = [1, 2, 3, 4];
+    let secondArr = [];
+    foo.frankenSplice(firstArr, secondArr, 0);
+    expect(firstArr).toEqual(firstArr);
+  });
+  it(`Should not mutate second array`, () => {
+    let firstArr = [1, 2, 3, 4];
+    let secondArr = [];
+    foo.frankenSplice(firstArr, secondArr, 0);
+    expect(secondArr).toEqual(secondArr);
+  });
+});
+
+// FALSY BOUNCER
+describe("Testing falsyBouncer for: ", () => {
+  it("should return an array", () => {
+    expect(typeof foo.bouncer([7, "ate", "", false, 9])).toBe("object");
+  });
+  it(`[7, "ate", "", false, 9] = [7, "ate", 9]`, () => {
+    expect(foo.bouncer([7, "ate", "", false, 9])).toEqual([7, "ate", 9]);
+  });
+  it(`["a", "b", "c"] = ["a", "b", "c"]`, () => {
+    expect(foo.bouncer(["a", "b", "c"])).toEqual(["a", "b", "c"]);
+  });
+  it(`[false, null, 0, NaN, undefined, ""] = []`, () => {
+    expect(foo.bouncer([false, null, 0, NaN, undefined, ""])).toEqual([]);
+  });
+  it(`[null, NaN, 1, 2, undefined] = [1, 2]`, () => {
+    expect(foo.bouncer([null, NaN, 1, 2, undefined])).toEqual([1, 2]);
+  });
+  it(`should not mutate original arr`, () => {
+    let arr = [null, NaN, 1, 2, undefined];
+    foo.bouncer([null, NaN, 1, 2, undefined]);
+    expect(arr).toBe(arr);
+  });
+});
+
+// WHERE DO I BELONG
+describe("Testing whereDoIBelong for: ", () => {
+  it(`should return a number`, () => {
+    expect(typeof foo.getIndexToIns([10, 20, 30, 40, 50], 35)).toEqual(
+      "number"
+    );
+  });
+  it(`[10, 20, 30, 40, 50], 35 = 3`, () => {
+    expect(foo.getIndexToIns([10, 20, 30, 40, 50], 35)).toEqual(3);
+  });
+  it(`[10, 20, 30, 40, 50], 30 = 2`, () => {
+    expect(foo.getIndexToIns([10, 20, 30, 40, 50], 30)).toEqual(2);
+  });
+  it(`[40, 60], 50, 30 = 1`, () => {
+    expect(foo.getIndexToIns([40, 60], 50, 30)).toEqual(1);
+  });
+  it(`[3, 10, 5], 3 = 0`, () => {
+    expect(foo.getIndexToIns([3, 10, 5], 3)).toEqual(0);
+  });
+  it(`[5, 3, 20, 3], 5 = 2`, () => {
+    expect(foo.getIndexToIns([5, 3, 20, 3], 5)).toEqual(2);
+  });
+  it(`[2, 20, 10], 19 = 2`, () => {
+    expect(foo.getIndexToIns([2, 20, 10], 19)).toEqual(2);
+  });
+  it(`[], 1 = 0`, () => {
+    expect(foo.getIndexToIns([], 1)).toEqual(0);
+  });
+});
+
+// MUTATIONS
+describe("Testing mutations for: ", () => {
+  it("should return a boolean", () => {
+    expect(typeof foo.mutation(["hello", "hey"])).toBe("boolean");
+  });
+  it(`["hello", "hey"] = false`, () => {
+    expect(foo.mutation(["hello", "hey"])).toBe(false);
+  });
+  it(`["hello", "Hello"] = true`, () => {
+    expect(foo.mutation(["hello", "Hello"])).toBe(true);
+  });
+  it(`["zyxwvutsrqponmlkjihgfedcba", "qrstu"] = true`, () => {
+    expect(foo.mutation(["zyxwvutsrqponmlkjihgfedcba", "qrstu"])).toBe(true);
+  });
+  it(`["Mary", "Army"] = true`, () => {
+    expect(foo.mutation(["Mary", "Army"])).toBe(true);
+  });
+  it(`["Mary", "Aarmy"] = true`, () => {
+    expect(foo.mutation(["Mary", "Aarmy"])).toBe(true);
+  });
+  it(`["Alien", "line"] = true`, () => {
+    expect(foo.mutation(["Alien", "line"])).toBe(true);
+  });
+  it(`["floor", "for"] = true`, () => {
+    expect(foo.mutation(["floor", "for"])).toBe(true);
+  });
+  it(`["Noel", "Ole"] = true`, () => {
+    expect(foo.mutation(["Noel", "Ole"])).toBe(true);
+  });
+  it(`["hello", "neo"] = false`, () => {
+    expect(foo.mutation(["hello", "neo"])).toBe(false);
+  });
+  it(`["voodoo", "no"] = false`, () => {
+    expect(foo.mutation(["voodoo", "no"])).toBe(false);
+  });
+  it(`["ate", "date"] = false`, () => {
+    expect(foo.mutation(["ate", "date"])).toBe(false);
+  });
+  it(`["Tiger", "Zebra"] = false`, () => {
+    expect(foo.mutation(["Tiger", "Zebra"])).toBe(false);
+  });
+});
+
+// CHUNKY MONKEY
+describe(`testing chunkyMonkey for: `, () => {
+  it(`returns an array`, () => {
+    expect(typeof foo.chunkArrayInGroups(["a", "b", "c", "d"], 2)).toBe(
+      "object"
+    );
+  });
+  it(`["a", "b", "c", "d"], 2 = [["a", "b"], ["c", "d"]]`, () => {
+    expect(foo.chunkArrayInGroups(["a", "b", "c", "d"], 2)).toEqual([
+      ["a", "b"],
+      ["c", "d"],
+    ]);
+  });
+  it(`[0, 1, 2, 3, 4, 5], 3 = [[0, 1, 2], [3, 4, 5]]`, () => {
+    expect(foo.chunkArrayInGroups([0, 1, 2, 3, 4, 5], 3)).toEqual([
+      [0, 1, 2],
+      [3, 4, 5],
+    ]);
+  });
+  it(`[0, 1, 2, 3, 4, 5], 2 = [[0, 1], [2, 3], [4, 5]]`, () => {
+    expect(foo.chunkArrayInGroups([0, 1, 2, 3, 4, 5], 2)).toEqual([
+      [0, 1],
+      [2, 3],
+      [4, 5],
+    ]);
+  });
+  it(`[0, 1, 2, 3, 4, 5], 4 = [[0, 1], [[0, 1, 2, 3], [4, 5]]`, () => {
+    expect(foo.chunkArrayInGroups([0, 1, 2, 3, 4, 5], 4)).toEqual([
+      [0, 1, 2, 3],
+      [4, 5],
+    ]);
+  });
+  it(`[0, 1, 2, 3, 4, 5, 6], 3 = [[0, 1, 2], [3, 4, 5], [6]]`, () => {
+    expect(foo.chunkArrayInGroups([0, 1, 2, 3, 4, 5, 6], 3)).toEqual([
+      [0, 1, 2],
+      [3, 4, 5],
+      [6],
+    ]);
+  });
+  it(`[0, 1, 2, 3, 4, 5, 6, 7, 8], 4 = [[0, 1, 2], [3, 4, 5], [6]]`, () => {
+    expect(foo.chunkArrayInGroups([0, 1, 2, 3, 4, 5, 6, 7, 8], 4)).toEqual([
+      [0, 1, 2, 3],
+      [4, 5, 6, 7],
+      [8],
+    ]);
+  });
+  it(`[0, 1, 2, 3, 4, 5, 6, 7, 8], 2 = [[0, 1], [2, 3], [4, 5], [6, 7], [8]]`, () => {
+    expect(foo.chunkArrayInGroups([0, 1, 2, 3, 4, 5, 6, 7, 8], 2)).toEqual([
+      [0, 1],
+      [2, 3],
+      [4, 5],
+      [6, 7],
+      [8],
+    ]);
   });
 });
